@@ -1,12 +1,24 @@
 import Form from "next/form";
+import type { Ref, SubmitEventHandler } from "react";
 
-export const SearchForm = ({ defaultValue = "" }: { defaultValue?: string }) => {
+type SearchFormProps = {
+  defaultValue?: string;
+  inputRef?: Ref<HTMLInputElement>;
+  onSubmit?: SubmitEventHandler<HTMLFormElement>;
+};
+
+export const SearchForm = ({
+  defaultValue = "",
+  inputRef,
+  onSubmit,
+}: SearchFormProps) => {
   return (
-    <Form action="/" role="search" className="flex w-full gap-2">
+    <Form action="/" role="search" onSubmit={onSubmit} className="flex w-full gap-2">
       <label htmlFor="q" className="sr-only">
         Search products
       </label>
       <input
+        ref={inputRef}
         id="q"
         name="q"
         type="search"

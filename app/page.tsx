@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import { getProducts } from "@/lib/products";
 import { ProductGrid, ProductGridSkeleton } from "./_components/ProductGrid";
-import { SearchForm } from "./_components/SearchForm";
 
 const Home = () => {
   return (
@@ -10,7 +9,6 @@ const Home = () => {
       <Suspense fallback={<ProductGridSkeleton />}>
         <ProductCatalog />
       </Suspense>
-      <SearchForm />
     </div>
   );
 };
