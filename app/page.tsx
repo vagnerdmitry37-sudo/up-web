@@ -5,13 +5,13 @@ import { SearchForm } from "./_components/SearchForm";
 
 const Home = () => {
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-6 px-4 py-10">
-      <h1 className="text-3xl font-semibold tracking-tight">Products</h1>
+    <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-6 px-4 py-6 md:px-6 md:py-10">
+      <h1 className="sr-only">Products</h1>
       <Suspense fallback={<ProductGridSkeleton />}>
         <ProductCatalog />
       </Suspense>
       <SearchForm />
-    </main>
+    </div>
   );
 };
 

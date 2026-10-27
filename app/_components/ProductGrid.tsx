@@ -15,8 +15,8 @@ export const ProductGrid = ({ products }: { products: Product[] }) => {
             <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
               {product.type}
             </span>
-            <span className="font-semibold">{product.name}</span>
-            <span className="line-clamp-2 text-sm text-muted-foreground">
+            <span className="font-semibold break-words">{product.name}</span>
+            <span className="line-clamp-2 break-words text-sm text-muted-foreground">
               {product.description}
             </span>
             <span className="mt-auto pt-2 font-medium">

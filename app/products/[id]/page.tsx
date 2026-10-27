@@ -15,17 +15,17 @@ export const generateMetadata = async (
 
 const ProductPage = (props: PageProps<"/products/[id]">) => {
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 px-4 py-10">
+    <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 px-4 py-6 md:px-6 md:py-10">
       <Link
         href="/"
-        className="text-sm text-muted-foreground hover:text-foreground"
+        className="-my-2 flex min-h-11 items-center self-start text-sm text-muted-foreground hover:text-foreground"
       >
         ← All products
       </Link>
       <Suspense fallback={<ProductDetailsSkeleton />}>
         <ProductDetails params={props.params} />
       </Suspense>
-    </main>
+    </div>
   );
 };
 
@@ -41,9 +41,9 @@ const ProductDetails = async ({
       <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
         {product.type}
       </span>
-      <h1 className="text-3xl font-semibold tracking-tight">{product.name}</h1>
+      <h1 className="text-2xl font-semibold tracking-tight break-words sm:text-3xl">{product.name}</h1>
       <p className="text-2xl font-medium">{product.price}</p>
-      <p className="leading-7 text-muted-foreground">{product.description}</p>
+      <p className="leading-7 break-words text-muted-foreground">{product.description}</p>
     </article>
   );
 };
