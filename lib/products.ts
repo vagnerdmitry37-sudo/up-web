@@ -1,8 +1,13 @@
-import type { Product, ProductsPageResponse } from "@/lib/api/models";
+import type {
+  Product,
+  ProductImage,
+  ProductsPageResponse,
+} from "@/lib/api/models";
 
 export type { Product };
 
 const MAX_ROWS_PER_REQUEST = 200;
+const MAX_PRODUCTS_PER_IMAGE_REQUEST = 100;
 
 const apiUrl = (path: string): URL => {
   const baseUrl = process.env.API_URL;
@@ -30,6 +35,31 @@ export const getProducts = async (): Promise<Product[]> => {
   } while (products.length < totalRecords);
 
   return products;
+};
+
+export const getProductCoverUrls = async (
+  productIds: string[],
+): Promise<Map<string, string>> => {
+  const coverUrls = new Map<string, string>();
+
+  for (let start = 0; start < productIds.length; start += MAX_PRODUCTS_PER_IMAGE_REQUEST) {
+    const query = new URLSearchParams({ entityType: "Product" });
+    for (const id of productIds.slice(start, start + MAX_PRODUCTS_PER_IMAGE_REQUEST)) {
+      query.append("entityIds", id);
+    }
+    const response = await fetch(apiUrl(`/api/images?${query}`));
+    if (!response.ok) {
+      throw new Error(`Failed to fetch product images: ${response.status}`);
+    }
+    const images: ProductImage[] = await response.json();
+    for (const image of images) {
+      if (!coverUrls.has(image.entityId)) {
+        coverUrls.set(image.entityId, image.url);
+      }
+    }
+  }
+
+  return coverUrls;
 };
 
 export const getProduct = async (
