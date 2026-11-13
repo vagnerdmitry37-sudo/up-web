@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node --use-system-ca ./node_modules/next/dist/bin/next dev",
+    "dev": "cross-env NODE_EXTRA_CA_CERTS=.cert/localhost.pem next dev",
     "build": "next build",
     "start": "cross-env NODE_OPTIONS=--use-system-ca next start",
     "lint": "eslint",
