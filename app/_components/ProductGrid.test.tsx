@@ -9,6 +9,7 @@ const product = (id: string, name: string): Product => ({
   name,
   seoDescription: "Three hours through the old town",
   shortDescription: "",
+  description: "",
   price: 25,
   attributes: {},
 });

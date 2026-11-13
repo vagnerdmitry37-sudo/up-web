@@ -76,6 +76,15 @@ Types for the UP backend (`../UP`) are generated from its OpenAPI document. Neve
 - Locally, run the API with its `https` launch profile, because UPAdmin needs HTTPS too. Then `API_URL=https://localhost:7215`. The `dev` and `start` scripts run Node with `--use-system-ca`, so it trusts the Windows-trusted .NET dev certificate. Never disable TLS checks (`NODE_TLS_REJECT_UNAUTHORIZED=0`).
 - Fetch functions live in `lib/<feature>.ts` (for example `lib/products.ts`), run on the server, and read the base URL from `process.env.API_URL` (set in `.env.local`).
 
+### Product descriptions and rich text
+
+- `shortDescription` and `seoDescription` are plain text. Render them with `{}`. `seoDescription` (max 160 characters, enforced in UPAdmin, the API and the database) feeds `<meta name="description">` in `generateMetadata`.
+- `description` is HTML from the UPAdmin rich-text editor (Quill). Always render it with `<RichText html={...} />` from `components/RichText.tsx`. Never use `dangerouslySetInnerHTML`.
+- The API sanitizes this HTML on save (`UP/src/UP.Api/RichText/RichTextJsonConverter.cs`). `RichText` adds a second layer: it renders only `ALLOWED_TAGS` from `lib/rich-text.ts` and drops every attribute except a safe `href` on links. Unknown tags are unwrapped and keep their text, and `DROPPED_TAGS` (scripts, styles, iframes and similar) are removed together with their content. When the backend allowlist changes, update `ALLOWED_TAGS` to match.
+- Links: only `http:`, `https:`, `mailto:` and site-relative `/` URLs are kept. External links open in a new tab with `rel="noopener noreferrer nofollow"`.
+- Parsing uses `html-react-parser` (MIT). It runs in Server Components without a browser DOM, which DOMPurify would need. Styling comes from the `prose` classes of `@tailwindcss/typography` (MIT), enabled with `@plugin` in `app/globals.css`.
+- Detect parser nodes by their `type` field (`isElement` in `lib/rich-text.ts`), never with `instanceof Element` or `instanceof Text`. The parser builds nodes from a different copy of the `domhandler` classes than the one `html-react-parser` re-exports, so `instanceof` is always `false` and every node gets skipped.
+
 If route-specific code later gets shared, move it up to the root folders. Don't import one route's `_components` into another route.
 
 ## 2. Routing file conventions
