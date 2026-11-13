@@ -10,7 +10,7 @@ export const generateMetadata = async (
   const { id } = await props.params;
   const product = await getProduct(id);
   if (!product) return {};
-  return { title: product.name, description: product.description };
+  return { title: product.name, description: product.seoDescription };
 };
 
 const ProductPage = (props: PageProps<"/products/[id]">) => {
@@ -43,7 +43,7 @@ const ProductDetails = async ({
       </span>
       <h1 className="text-2xl font-semibold tracking-tight break-words sm:text-3xl">{product.name}</h1>
       <p className="text-2xl font-medium">{product.price}</p>
-      <p className="leading-7 break-words text-muted-foreground">{product.description}</p>
+      <p className="leading-7 break-words text-muted-foreground">{product.seoDescription}</p>
     </article>
   );
 };

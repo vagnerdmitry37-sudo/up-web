@@ -46,7 +46,7 @@ export const ProductGrid = ({ products, coverUrls }: ProductGridProps) => {
                 </span>
                 <span className="font-semibold break-words">{product.name}</span>
                 <span className="line-clamp-3 break-words text-sm text-muted-foreground">
-                  {product.shortDescription || product.description}
+                  {product.shortDescription || product.seoDescription}
                 </span>
                 <span className="mt-auto pt-2 font-medium">{product.price}</span>
               </div>

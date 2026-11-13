@@ -7,7 +7,7 @@ const product = (id: string, name: string): Product => ({
   id,
   type: "Excursion",
   name,
-  description: "Three hours through the old town",
+  seoDescription: "Three hours through the old town",
   shortDescription: "",
   price: 25,
   attributes: {},
