@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/SiteFooter";
-import { SiteHeader } from "@/components/SiteHeader";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,7 +25,6 @@ const RootLayout = ({ children }: LayoutProps<"/">) => {
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}
     >
       <body className="flex h-dvh flex-col overflow-hidden bg-background text-foreground">
-        <SiteHeader />
         <main className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain">
           {children}
         </main>
