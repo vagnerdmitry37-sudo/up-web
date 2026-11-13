@@ -8,6 +8,7 @@ const product = (id: string, name: string): Product => ({
   type: "Excursion",
   name,
   description: "Three hours through the old town",
+  shortDescription: "",
   price: 25,
   attributes: {},
 });
