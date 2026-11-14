@@ -44,7 +44,7 @@ export const SearchMenu = () => {
         id={menuId}
         popover="auto"
         onToggle={handleMenuToggle}
-        className="fixed inset-x-4 top-auto bottom-[calc(4.5rem+env(safe-area-inset-bottom))] m-0 w-auto rounded-xl border bg-popover p-3 text-popover-foreground shadow-lg sm:left-auto sm:right-[calc(max(0px,(100vw-64rem)/2)+1rem)] sm:w-96 md:right-[calc(max(0px,(100vw-64rem)/2)+1.5rem)]"
+        className="fixed inset-x-4 top-auto bottom-[calc(4.5rem+env(safe-area-inset-bottom))] m-0 w-auto rounded-xl border bg-popover p-3 text-popover-foreground shadow-lg sm:left-auto sm:right-[calc(max(0px,(100vw-64rem)/2)+1.5rem)] sm:w-96 lg:right-[calc(max(0px,(100vw-64rem)/2)+2rem)]"
       >
         <SearchForm inputRef={inputRef} onSubmit={closeMenu} />
       </div>

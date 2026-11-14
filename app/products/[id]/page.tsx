@@ -16,7 +16,7 @@ export const generateMetadata = async (
 
 const ProductPage = (props: PageProps<"/products/[id]">) => {
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 px-4 py-6 md:px-6 md:py-10">
+    <div className="flex flex-1 flex-col gap-6">
       <Link
         href="/"
         className="-my-2 flex min-h-11 items-center self-start text-sm text-muted-foreground hover:text-foreground"
@@ -45,10 +45,6 @@ const ProductDetails = async ({
       <h1 className="text-2xl font-semibold tracking-tight break-words sm:text-3xl">{product.name}</h1>
       
       <p className="text-2xl font-medium">{product.price}</p>
-
-      {product.shortDescription && (
-        <p className="text-lg leading-7 break-words">{product.shortDescription}</p>
-      )}
 
       <RichText html={product.description} />
     </article>

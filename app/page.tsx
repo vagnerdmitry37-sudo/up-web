@@ -4,7 +4,7 @@ import { ProductGrid, ProductGridSkeleton } from "./_components/ProductGrid";
 
 const Home = () => {
   return (
-    <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-6 px-4 py-6 md:px-6 md:py-10">
+    <div className="flex flex-1 flex-col gap-6">
       <h1 className="sr-only">Products</h1>
       <Suspense fallback={<ProductGridSkeleton />}>
         <ProductCatalog />
