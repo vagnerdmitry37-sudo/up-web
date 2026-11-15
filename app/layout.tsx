@@ -27,7 +27,7 @@ const RootLayout = ({ children }: LayoutProps<"/">) => {
     >
       <body className="flex h-dvh flex-col overflow-hidden bg-background text-foreground">
         <main className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain">
-          <PageContainer className="flex flex-1 flex-col py-6 md:py-10">
+          <PageContainer className="flex flex-1 flex-col py-4 sm:py-6 lg:py-8">
             {children}
           </PageContainer>
         </main>
