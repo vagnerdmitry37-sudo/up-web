@@ -22,7 +22,7 @@ export const ProductGrid = ({ products, coverUrls }: ProductGridProps) => {
           <li key={product.id}>
             <Link
               href={`/products/${product.id}`}
-              className="flex h-full flex-col overflow-hidden rounded-xl border bg-card text-card-foreground transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+              className="flex h-full flex-col overflow-hidden rounded-xl border bg-card text-card-foreground transition-colors hover:border-foreground/30 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
             >
               <div className={coverClassName}>
                 {coverUrl ? (
