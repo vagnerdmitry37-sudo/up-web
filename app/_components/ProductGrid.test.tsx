@@ -5,7 +5,8 @@ import { ProductGrid, ProductGridSkeleton } from "./ProductGrid";
 
 const product = (id: string, name: string): Product => ({
   id,
-  type: "Excursion",
+  type: "GroupExcursion",
+  typeLabel: "Group excursion",
   name,
   seoDescription: "Three hours through the old town",
   shortDescription: "",

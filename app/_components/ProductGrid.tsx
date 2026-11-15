@@ -42,7 +42,7 @@ export const ProductGrid = ({ products, coverUrls }: ProductGridProps) => {
               </div>
               <div className="flex flex-1 flex-col gap-2 p-5">
                 <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                  {product.type}
+                  {product.typeLabel}
                 </span>
                 <span className="font-semibold break-words">{product.name}</span>
                 <span className="line-clamp-3 break-words text-sm text-muted-foreground">

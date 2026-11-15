@@ -40,7 +40,7 @@ const ProductDetails = async ({
   return (
     <article className="flex flex-col gap-4">
       <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-        {product.type}
+        {product.typeLabel}
       </span>
       <h1 className="text-2xl font-semibold tracking-tight break-words sm:text-3xl">{product.name}</h1>
       
