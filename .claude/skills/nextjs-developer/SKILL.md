@@ -141,7 +141,7 @@ For anything visual (layouts, components, Tailwind classes, CSS), also follow th
 
 ## 5. Function syntax: arrow functions everywhere
 
-Write **every function as an arrow function** assigned to a `const`, never as a `function` declaration. This covers:
+Write **every function as an arrow function** assigned to a `const`, never as a `function` declaration. The only exception is a class method whose body needs several statements: write it as a method declaration. A class member with a single-expression body is still an arrow property (`toggle = () => this.open.update(...)`). This covers:
 
 - React components, including pages, layouts, `not-found`, `error`, `loading`, and async server components.
 - Next.js special exports: `export const generateMetadata = async (...) => {...};`, and likewise `generateStaticParams` and route handlers (`export const GET = async (request: Request) => {...};`).
