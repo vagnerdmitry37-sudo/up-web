@@ -3,7 +3,16 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { RichText } from "@/components/RichText";
-import { getProduct } from "@/lib/products";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { getProductTypes } from "@/lib/product-types";
+import { getProduct, getProductImages } from "@/lib/products";
+import { ProductFacts } from "./_components/ProductFacts";
+import { ProductGallery } from "./_components/ProductGallery";
+
+const layoutClassName = "grid gap-6 lg:grid-cols-12 lg:gap-8";
+const galleryColumnClassName = "lg:col-span-7";
+const summaryColumnClassName = "flex min-w-0 flex-col gap-4 lg:col-span-5";
 
 export const generateMetadata = async (
   props: PageProps<"/products/[id]">,
@@ -37,27 +46,63 @@ const ProductDetails = async ({
   const product = await getProduct(id);
   if (!product) notFound();
 
-  return (
-    <article className="flex flex-col gap-4">
-      <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-        {product.typeLabel}
-      </span>
-      <h1 className="text-2xl font-semibold tracking-tight break-words sm:text-3xl">{product.name}</h1>
-      
-      <p className="text-2xl font-medium">{product.price}</p>
+  const [images, productTypes] = await Promise.all([
+    getProductImages(product.id),
+    getProductTypes(),
+  ]);
+  const definition = productTypes.find(({ type }) => type === product.type);
 
-      <RichText html={product.description} />
+  return (
+    <article className={layoutClassName}>
+      <div className={summaryColumnClassName}>
+        <Badge variant="secondary">{product.typeLabel}</Badge>
+        <h1 className="text-2xl font-semibold tracking-tight break-words sm:text-3xl">
+          {product.name}ks
+        </h1>
+        <Card>
+          <CardContent className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
+              <span className="text-sm text-muted-foreground">
+                {definition?.priceLabel ?? "Price"}
+              </span>
+              <span className="text-3xl font-semibold tracking-tight break-words">
+                {product.price}
+              </span>
+            </div>
+            {definition && (
+              <ProductFacts definition={definition} attributes={product.attributes} />
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className={galleryColumnClassName}>
+        <ProductGallery images={images} productName={product.name} />
+      </div>
+
+      {product.description && (
+        <section aria-labelledby="about-heading" className="flex flex-col gap-4 lg:col-span-12">
+          <h2 id="about-heading" className="text-xl font-semibold tracking-tight">
+            About
+          </h2>
+          <RichText html={product.description} className="max-w-prose" />
+        </section>
+      )}
     </article>
   );
 };
 
 const ProductDetailsSkeleton = () => {
   return (
-    <div className="flex flex-col gap-4" aria-busy="true">
-      <div className="h-4 w-24 animate-pulse rounded bg-muted" />
-      <div className="h-9 w-2/3 animate-pulse rounded bg-muted" />
-      <div className="h-8 w-28 animate-pulse rounded bg-muted" />
-      <div className="h-20 animate-pulse rounded bg-muted" />
+    <div className={layoutClassName} aria-busy="true">
+      <div className={summaryColumnClassName}>
+        <div className="h-5 w-28 animate-pulse rounded-full bg-muted" />
+        <div className="h-9 w-3/4 animate-pulse rounded bg-muted" />
+        <div className="h-44 animate-pulse rounded-xl bg-muted" />
+      </div>
+      <div className={galleryColumnClassName}>
+        <div className="aspect-[4/3] w-full animate-pulse rounded-xl bg-muted lg:aspect-auto lg:h-full" />
+      </div>
     </div>
   );
 };

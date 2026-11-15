@@ -7,3 +7,5 @@ export type Product = Schema<"ProductResponse">;
 export type ProductType = Schema<"ProductType">;
 export type ProductsPageResponse = Schema<"ProductsPageResponse">;
 export type ProductImage = Schema<"ImageResponse">;
+export type ProductTypeDefinition = Schema<"ProductTypeResponse">;
+export type AttributeDefinition = Schema<"AttributeDefinitionResponse">;

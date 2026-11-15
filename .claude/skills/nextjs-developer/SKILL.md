@@ -123,6 +123,8 @@ Use route groups to give a subset of routes their own layout or `loading.tsx` wi
 
 For anything visual (layouts, components, Tailwind classes, CSS), also follow the **`mobile-first-ui`** skill. The app is mobile first.
 
+- **Use shadcn/ui components first.** Before building any UI piece by hand (badge, button, card, carousel, separator, dialog, tabs, pagination, skeleton…), check the Base UI catalogue at https://ui.shadcn.com/docs/components/base. If a component fits, add it with `npx shadcn@latest add <name>` and use it as documented, through its own props (`variant`, `size`) rather than restyling it with custom classes. Use `className` only for layout and position, such as placing a `Badge` over an image. Build custom markup only when no shadcn component fits. The CLI may skip runtime dependencies (`@base-ui/react`, `class-variance-authority`), so check that `npm run build` passes after adding one.
+
 - **Server Components by default.** Add `"use client"` only to the smallest leaf that needs state, effects, event handlers or browser APIs. Keep pages and layouts as server components, and pass server data down as props.
 - Fetch data in server components or in `_lib`/`lib` functions, not in client `useEffect`, unless it is truly client-only.
 - Code that must never reach the browser (secrets, DB access) goes in `lib/` and imports `server-only`.

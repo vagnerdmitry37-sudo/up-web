@@ -1,21 +1,14 @@
+import { apiUrl } from "@/lib/api/api-url";
 import type {
   Product,
   ProductImage,
   ProductsPageResponse,
 } from "@/lib/api/models";
 
-export type { Product };
+export type { Product, ProductImage };
 
 const MAX_ROWS_PER_REQUEST = 200;
 const MAX_PRODUCTS_PER_IMAGE_REQUEST = 100;
-
-const apiUrl = (path: string): URL => {
-  const baseUrl = process.env.API_URL;
-  if (!baseUrl) {
-    throw new Error("API_URL is not set. Add it to .env.local.");
-  }
-  return new URL(path, baseUrl);
-};
 
 export const getProducts = async (): Promise<Product[]> => {
   const products: Product[] = [];
@@ -60,6 +53,17 @@ export const getProductCoverUrls = async (
   }
 
   return coverUrls;
+};
+
+export const getProductImages = async (
+  productId: string,
+): Promise<ProductImage[]> => {
+  const query = new URLSearchParams({ entityType: "Product", entityIds: productId });
+  const response = await fetch(apiUrl(`/api/images?${query}`));
+  if (!response.ok) {
+    throw new Error(`Failed to fetch images of product ${productId}: ${response.status}`);
+  }
+  return response.json();
 };
 
 export const getProduct = async (

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ImageOffIcon } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import type { Product } from "@/lib/products";
 
 const gridClassName = "grid gap-4 sm:grid-cols-2 lg:grid-cols-3";
@@ -41,9 +42,7 @@ export const ProductGrid = ({ products, coverUrls }: ProductGridProps) => {
                 )}
               </div>
               <div className="flex flex-1 flex-col gap-2 p-5">
-                <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                  {product.typeLabel}
-                </span>
+                <Badge variant="secondary">{product.typeLabel}</Badge>
                 <span className="font-semibold break-words">{product.name}</span>
                 <span className="line-clamp-3 break-words text-sm text-muted-foreground">
                   {product.shortDescription || product.seoDescription}
