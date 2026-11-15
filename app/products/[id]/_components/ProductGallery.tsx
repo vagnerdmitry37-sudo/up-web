@@ -68,7 +68,7 @@ export const ProductGallery = ({ images, productName }: ProductGalleryProps) => 
                 fill
                 sizes={slideSizes}
                 unoptimized
-                priority={index === 0}
+                loading={index === 0 ? "eager" : "lazy"}
                 className="object-cover"
               />
             </div>

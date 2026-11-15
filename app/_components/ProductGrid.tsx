@@ -7,6 +7,7 @@ import type { Product } from "@/lib/products";
 const gridClassName = "grid gap-4 sm:grid-cols-2 lg:grid-cols-3";
 const coverClassName = "relative aspect-[4/3] w-full overflow-hidden bg-muted";
 const coverSizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
+const COVERS_IN_WIDEST_FIRST_ROW = 3;
 
 type ProductGridProps = {
   products: Product[];
@@ -16,8 +17,9 @@ type ProductGridProps = {
 export const ProductGrid = ({ products, coverUrls }: ProductGridProps) => {
   return (
     <ul className={gridClassName}>
-      {products.map((product) => {
+      {products.map((product, index) => {
         const coverUrl = coverUrls.get(product.id);
+        const isInFirstRow = index < COVERS_IN_WIDEST_FIRST_ROW;
         return (
           <li key={product.id}>
             <Link
@@ -31,6 +33,7 @@ export const ProductGrid = ({ products, coverUrls }: ProductGridProps) => {
                     alt=""
                     fill
                     sizes={coverSizes}
+                    loading={isInFirstRow ? "eager" : "lazy"}
                     unoptimized
                     className="object-cover"
                   />
