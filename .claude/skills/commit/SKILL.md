@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Commit (and push, when asked) changes in this Next.js app. Checks lint and build, and commits only if everything passes; otherwise stops and reports a checklist table. Pushes to origin only when the user explicitly says "push". Use whenever the user asks to commit or to commit and push, in any wording ("commit", "commit the changes", "commit and push", "push it"), instead of running git commit directly.
+description: Commit (and push, when asked) changes in this Next.js app. Checks lint, build and unit tests, and commits only if everything passes; otherwise stops and reports a checklist table. Pushes to origin only when the user explicitly says "push". Use whenever the user asks to commit or to commit and push, in any wording ("commit", "commit the changes", "commit and push", "push it"), instead of running git commit directly.
 ---
 
 Run every command from the repo root (the folder that holds `package.json`). Run every step in order. Never skip a check and never use `--no-verify`. Push only when the user's request explicitly says to push (e.g. "commit and push"); otherwise never push.
@@ -20,6 +20,9 @@ Run every check, even if an earlier one fails, so the report is complete. This s
 | --- | ---------------------------------------- | --------------- |
 | 1   | Lint (ESLint with `eslint-config-next`)  | `npm run lint`  |
 | 2   | Build (production build and TypeScript)  | `npm run build` |
+| 3   | Unit tests (Vitest)                      | `npm test`      |
+
+The git pre-commit hook (`.githooks/pre-commit`, enabled by the `prepare` script) also runs `npm test` and blocks the commit when a test fails.
 
 Collect each error as file, line, rule/code and message, with repo-relative paths and duplicates removed.
 
@@ -52,6 +55,7 @@ Skip this step unless the request contains an explicit push instruction such as 
 | ------ | ------------ | -------------------------------------------- |
 | Lint   | ✅ / ❌      | N errors                                     |
 | Build  | ✅ / ❌      | N errors                                     |
+| Tests  | ✅ / ❌      | N passed, or failing tests                   |
 | Commit | ✅ / ❌      | short hash, or "Not created"                 |
 | Push   | ✅ / ❌ / ⏭️ | "origin/<branch>", error, or "not requested" |
 

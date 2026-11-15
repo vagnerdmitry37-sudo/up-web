@@ -8,7 +8,8 @@
     "start": "cross-env NODE_OPTIONS=--use-system-ca next start",
     "lint": "eslint",
     "generate:api": "openapi-typescript ../UP/src/UP.Api/openapi/UP.Api.json -o lib/api/schema.ts",
-    "test": "vitest run"
+    "test": "vitest run",
+    "prepare": "git config core.hooksPath .githooks"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
