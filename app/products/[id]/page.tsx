@@ -103,6 +103,16 @@ const ProductDetailsSkeleton = () => {
       <div className={galleryColumnClassName}>
         <div className="aspect-[4/3] w-full animate-pulse rounded-xl bg-muted lg:aspect-auto lg:h-full" />
       </div>
+      <div className="flex flex-col gap-4 lg:col-span-12">
+        <div className="h-7 w-24 animate-pulse rounded bg-muted" />
+        <div className="flex max-w-prose flex-col gap-3">
+          <div className="h-4 w-full animate-pulse rounded bg-muted" />
+          <div className="h-4 w-full animate-pulse rounded bg-muted" />
+          <div className="h-4 w-11/12 animate-pulse rounded bg-muted" />
+          <div className="h-4 w-full animate-pulse rounded bg-muted" />
+          <div className="h-4 w-2/3 animate-pulse rounded bg-muted" />
+        </div>
+      </div>
     </div>
   );
 };
