@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ImageOffIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import type { ProductType } from "@/lib/api/models";
 import type { Product } from "@/lib/products";
 
 const gridClassName = "grid gap-4 sm:grid-cols-2 lg:grid-cols-3";
@@ -12,9 +13,10 @@ const COVERS_IN_WIDEST_FIRST_ROW = 3;
 type ProductGridProps = {
   products: Product[];
   coverUrls: Map<string, string>;
+  productTypeLabels: Map<ProductType, string>;
 };
 
-export const ProductGrid = ({ products, coverUrls }: ProductGridProps) => {
+export const ProductGrid = ({ products, coverUrls, productTypeLabels }: ProductGridProps) => {
   return (
     <ul className={gridClassName}>
       {products.map((product, index) => {
@@ -45,7 +47,7 @@ export const ProductGrid = ({ products, coverUrls }: ProductGridProps) => {
                 )}
               </div>
               <div className="flex flex-1 flex-col gap-2 p-5">
-                <Badge variant="secondary">{product.typeLabel}</Badge>
+                <Badge variant="secondary">{productTypeLabels.get(product.type)}</Badge>
                 <span className="font-semibold break-words">{product.name}</span>
                 <span className="line-clamp-3 break-words text-sm text-muted-foreground">
                   {product.shortDescription || product.seoDescription}

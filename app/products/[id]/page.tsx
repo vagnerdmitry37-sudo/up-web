@@ -2,12 +2,10 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { RichText } from "@/components/RichText";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { getProductTypes } from "@/lib/product-types";
 import { getProduct, getProductImages } from "@/lib/products";
-import { ProductFacts } from "./_components/ProductFacts";
+import { getProductTypeLabels } from "@/lib/reference-data";
 import { ProductGallery } from "./_components/ProductGallery";
 
 const layoutClassName = "grid gap-6 lg:grid-cols-12 lg:gap-8";
@@ -46,32 +44,26 @@ const ProductDetails = async ({
   const product = await getProduct(id);
   if (!product) notFound();
 
-  const [images, productTypes] = await Promise.all([
+  const [images, productTypeLabels] = await Promise.all([
     getProductImages(product.id),
-    getProductTypes(),
+    getProductTypeLabels(),
   ]);
-  const definition = productTypes.find(({ type }) => type === product.type);
 
   return (
     <article className={layoutClassName}>
       <div className={summaryColumnClassName}>
-        <Badge variant="secondary">{product.typeLabel}</Badge>
+        <Badge variant="secondary">{productTypeLabels.get(product.type)}</Badge>
         <h1 className="text-2xl font-semibold tracking-tight break-words sm:text-3xl">
           {product.name}ks
         </h1>
         <Card>
           <CardContent className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
-              <span className="text-sm text-muted-foreground">
-                {definition?.priceLabel ?? "Price"}
-              </span>
+              <span className="text-sm text-muted-foreground">Price</span>
               <span className="text-3xl font-semibold tracking-tight break-words">
                 {product.price}
               </span>
             </div>
-            {definition && (
-              <ProductFacts definition={definition} attributes={product.attributes} />
-            )}
           </CardContent>
         </Card>
       </div>
@@ -79,15 +71,6 @@ const ProductDetails = async ({
       <div className={galleryColumnClassName}>
         <ProductGallery images={images} productName={product.name} />
       </div>
-
-      {product.description && (
-        <section aria-labelledby="about-heading" className="flex flex-col gap-4 lg:col-span-12">
-          <h2 id="about-heading" className="text-xl font-semibold tracking-tight">
-            About
-          </h2>
-          <RichText html={product.description} className="max-w-prose" />
-        </section>
-      )}
     </article>
   );
 };
@@ -102,16 +85,6 @@ const ProductDetailsSkeleton = () => {
       </div>
       <div className={galleryColumnClassName}>
         <div className="aspect-[4/3] w-full animate-pulse rounded-xl bg-muted lg:aspect-auto lg:h-full" />
-      </div>
-      <div className="flex flex-col gap-4 lg:col-span-12">
-        <div className="h-7 w-24 animate-pulse rounded bg-muted" />
-        <div className="flex max-w-prose flex-col gap-3">
-          <div className="h-4 w-full animate-pulse rounded bg-muted" />
-          <div className="h-4 w-full animate-pulse rounded bg-muted" />
-          <div className="h-4 w-11/12 animate-pulse rounded bg-muted" />
-          <div className="h-4 w-full animate-pulse rounded bg-muted" />
-          <div className="h-4 w-2/3 animate-pulse rounded bg-muted" />
-        </div>
       </div>
     </div>
   );

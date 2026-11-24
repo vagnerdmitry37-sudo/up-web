@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { getProductCoverUrls, getProducts } from "@/lib/products";
+import { getProductTypeLabels } from "@/lib/reference-data";
 import { ProductGrid, ProductGridSkeleton } from "./_components/ProductGrid";
 
 const Home = () => {
@@ -24,9 +25,18 @@ const ProductCatalog = async () => {
     );
   }
 
-  const coverUrls = await getProductCoverUrls(products.map((product) => product.id));
+  const [coverUrls, productTypeLabels] = await Promise.all([
+    getProductCoverUrls(products.map((product) => product.id)),
+    getProductTypeLabels(),
+  ]);
 
-  return <ProductGrid products={products} coverUrls={coverUrls} />;
+  return (
+    <ProductGrid
+      products={products}
+      coverUrls={coverUrls}
+      productTypeLabels={productTypeLabels}
+    />
+  );
 };
 
 export default Home;

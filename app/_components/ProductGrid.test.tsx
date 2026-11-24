@@ -1,19 +1,19 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
+import type { ProductType } from "@/lib/api/models";
 import type { Product } from "@/lib/products";
 import { ProductGrid, ProductGridSkeleton } from "./ProductGrid";
 
 const product = (id: string, name: string): Product => ({
   id,
   type: "GroupExcursion",
-  typeLabel: "Group excursion",
   name,
   seoDescription: "Three hours through the old town",
   shortDescription: "",
-  description: "",
   price: 25,
-  attributes: {},
 });
+
+const productTypeLabels = new Map<ProductType, string>([["GroupExcursion", "Group excursion"]]);
 
 describe("ProductGrid", () => {
   afterEach(cleanup);
@@ -23,6 +23,7 @@ describe("ProductGrid", () => {
       <ProductGrid
         products={[product("p1", "Old Town Walk")]}
         coverUrls={new Map([["p1", "https://img.test/p1-cover.webp"]])}
+        productTypeLabels={productTypeLabels}
       />,
     );
 
@@ -33,8 +34,26 @@ describe("ProductGrid", () => {
     );
   });
 
+  it("shows the readable label of the product type", () => {
+    render(
+      <ProductGrid
+        products={[product("p1", "Old Town Walk")]}
+        coverUrls={new Map()}
+        productTypeLabels={productTypeLabels}
+      />,
+    );
+
+    expect(screen.getByText("Group excursion")).toBeTruthy();
+  });
+
   it("shows a placeholder instead of an image for a product without images", () => {
-    render(<ProductGrid products={[product("p2", "Airport transfer")]} coverUrls={new Map()} />);
+    render(
+      <ProductGrid
+        products={[product("p2", "Airport transfer")]}
+        coverUrls={new Map()}
+        productTypeLabels={productTypeLabels}
+      />,
+    );
 
     const link = screen.getByRole("link", { name: /Airport transfer/ });
     expect(link.querySelector("img")).toBeNull();
@@ -46,6 +65,7 @@ describe("ProductGrid", () => {
       <ProductGrid
         products={[product("p1", "Old Town Walk"), product("p2", "Airport transfer")]}
         coverUrls={new Map([["p1", "https://img.test/p1-cover.webp"]])}
+        productTypeLabels={productTypeLabels}
       />,
     );
 

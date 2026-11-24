@@ -13,19 +13,17 @@ const image = (entityId: string, sortOrder: number, url: string): ProductImage =
   entityType: "Product",
   entityId,
   sortOrder,
+  fileName: "",
   url,
 });
 
 const product = (id: string): Product => ({
   id,
   type: "GroupExcursion",
-  typeLabel: "Group excursion",
   name: `Product ${id}`,
   seoDescription: "",
   shortDescription: "",
-  description: "",
   price: 25,
-  attributes: {},
 });
 
 const products = (count: number, offset = 0) =>

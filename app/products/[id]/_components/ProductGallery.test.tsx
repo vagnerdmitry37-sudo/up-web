@@ -8,6 +8,7 @@ const image = (sortOrder: number): ProductImage => ({
   entityType: "Product",
   entityId: "p1",
   sortOrder,
+  fileName: "",
   url: `https://img.test/${sortOrder}.webp`,
 });
 
