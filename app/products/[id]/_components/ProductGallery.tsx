@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { ImageOffIcon } from "lucide-react";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import {
   Carousel,
@@ -13,10 +14,9 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import type { ProductImage } from "@/lib/products";
+import { galleryAspectRatio } from "./galleryAspectRatio";
 
-const slideClassName =
-  "relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-muted lg:aspect-auto lg:h-full";
-const fillColumnHeightClassName = "lg:h-full";
+const slideClassName = "w-full overflow-hidden rounded-xl bg-muted";
 const slideSizes = "(min-width: 1024px) 58vw, 100vw";
 const navigationButtonClassName = "hidden sm:inline-flex";
 
@@ -40,12 +40,12 @@ export const ProductGallery = ({ images, productName }: ProductGalleryProps) => 
 
   if (images.length === 0) {
     return (
-      <div className={slideClassName}>
+      <AspectRatio ratio={galleryAspectRatio} className={slideClassName}>
         <ImageOffIcon
           aria-hidden="true"
           className="absolute inset-0 m-auto size-10 text-muted-foreground"
         />
-      </div>
+      </AspectRatio>
     );
   }
 
@@ -56,12 +56,11 @@ export const ProductGallery = ({ images, productName }: ProductGalleryProps) => 
       setApi={setApi}
       opts={{ loop: hasSeveralImages }}
       aria-label={`${productName} photos`}
-      className="lg:h-full lg:[&>[data-slot=carousel-content]]:h-full"
     >
-      <CarouselContent className={fillColumnHeightClassName}>
+      <CarouselContent>
         {images.map((image, index) => (
-          <CarouselItem key={image.id} className={fillColumnHeightClassName}>
-            <div className={slideClassName}>
+          <CarouselItem key={image.id}>
+            <AspectRatio ratio={galleryAspectRatio} className={slideClassName}>
               <Image
                 src={image.url}
                 alt={`${productName}, photo ${index + 1} of ${images.length}`}
@@ -71,7 +70,7 @@ export const ProductGallery = ({ images, productName }: ProductGalleryProps) => 
                 loading={index === 0 ? "eager" : "lazy"}
                 className="object-cover"
               />
-            </div>
+            </AspectRatio>
           </CarouselItem>
         ))}
       </CarouselContent>

@@ -2,11 +2,13 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { getProduct, getProductImages } from "@/lib/products";
 import { getProductTypeLabels } from "@/lib/reference-data";
 import { ProductGallery } from "./_components/ProductGallery";
+import { galleryAspectRatio } from "./_components/galleryAspectRatio";
 
 const layoutClassName = "grid gap-6 lg:grid-cols-12 lg:gap-8";
 const galleryColumnClassName = "lg:col-span-7";
@@ -54,7 +56,7 @@ const ProductDetails = async ({
       <div className={summaryColumnClassName}>
         <Badge variant="secondary">{productTypeLabels.get(product.type)}</Badge>
         <h1 className="text-2xl font-semibold tracking-tight break-words sm:text-3xl">
-          {product.name}ks
+          {product.name}
         </h1>
         <Card>
           <CardContent className="flex flex-col gap-4">
@@ -84,7 +86,10 @@ const ProductDetailsSkeleton = () => {
         <div className="h-44 animate-pulse rounded-xl bg-muted" />
       </div>
       <div className={galleryColumnClassName}>
-        <div className="aspect-[4/3] w-full animate-pulse rounded-xl bg-muted lg:aspect-auto lg:h-full" />
+        <AspectRatio
+          ratio={galleryAspectRatio}
+          className="w-full animate-pulse rounded-xl bg-muted"
+        />
       </div>
     </div>
   );
